@@ -51,17 +51,17 @@ export const FullPost = () => {
         items={[
           {
             user: {
-              fullName: "Вася Пупкин",
-              avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
+              fullName: 'Андрій Петрович',
+              avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
             },
-            text: "Это тестовый комментарий 555555",
+            text: 'Хз, що писати',
           },
           {
             user: {
-              fullName: "Иван Иванов",
-              avatarUrl: "https://mui.com/static/images/avatar/2.jpg",
+              fullName: 'Аніман Страган',
+              avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
             },
-            text: "When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top",
+            text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
           },
         ]}
         isLoading={false}

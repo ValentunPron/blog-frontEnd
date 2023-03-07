@@ -10,6 +10,8 @@ import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { removePost } from '../../redux/slices/posts';
 
 export const Post = ({
   id,
@@ -25,11 +27,15 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
+  const dispatch = useDispatch();
   if (isLoading) {
     return <PostSkeleton />;
   }
-
-  const onClickRemove = () => { };
+  const onClickRemove = () => {
+    if (window.confirm('Ви точно хочете видалити статю?')) {
+      dispatch(removePost(id));
+    }
+  };
 
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
@@ -48,7 +54,7 @@ export const Post = ({
       {imageUrl && (
         <img
           className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
-          src={imageUrl}
+          src={`http://localhost:4444${imageUrl}`}
           alt={title}
         />
       )}

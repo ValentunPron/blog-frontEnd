@@ -21,10 +21,13 @@ function App() {
       <Container maxWidth="lg">
         <Routes>
           <Route path="/posts/:id" element={ <FullPost /> } />
+          <Route path="/posts/:id/edit" element={ <AddPost /> } />
           <Route path="/" element={ <Home /> } />
           <Route path="/add-posts" element={ <AddPost /> } />
           <Route path="/login" element={ <Login /> } />
           <Route path="/register" element={ <Registration /> } />
+
+          <Route path="*" element={ <Home /> } />
         </Routes>
       </Container>
     </>

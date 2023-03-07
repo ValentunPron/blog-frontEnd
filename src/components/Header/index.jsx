@@ -29,9 +29,9 @@ export const Header = () => {
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <a href="/posts/create">
+                <Link to="/add-posts">
                   <Button variant="contained">Написати статю</Button>
-                </a>
+                </Link>
                 <Button onClick={onClickLogout} variant="contained" color="error">
                   Вийти
                 </Button>

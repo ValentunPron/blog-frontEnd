@@ -2,7 +2,6 @@ import axios from "axios";
 
 const instance = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
-	'Content-Type': 'text/plain'
 });
 
 instance.interceptors.request.use((config) => {

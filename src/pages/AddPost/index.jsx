@@ -48,6 +48,8 @@ export const AddPost = () => {
     try {
       setLoading(true);
 
+      console.log(tags);
+
       const fields = { title, imageUrl, tags, text }
 
       const { data } = isEditing
@@ -69,7 +71,7 @@ export const AddPost = () => {
         console.log(data);
         setTitle(data.title);
         setText(data.text);
-        setTags(data.tags.join(','));
+        setTags(data.tags.join(' '));
         setImageUrl(data.imageUrl);
       })
     }

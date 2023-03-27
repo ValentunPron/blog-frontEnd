@@ -13,6 +13,8 @@ export const Home = () => {
   const dispatch = useDispatch();
   const { posts, tags } = useSelector(state => state.posts);
   const userData = useSelector(state => state.auth.data);
+  const [filter, setFilter] = React.useState('new');
+  const [filterBase, setFilterBase] = React.useState([]);
 
   const isPostLoading = posts.status === 'loading';
   const isTagsLoading = tags.stasus === 'loading';
@@ -20,18 +22,42 @@ export const Home = () => {
   React.useEffect(() => {
     dispatch(fetchPost());
     dispatch(fetchTags());
+
   }, []);
+
+  React.useEffect(() => {
+    setFilterBase(posts.items.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
+  }, [posts.items])
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
+
+  React.useEffect(() => {
+    if (filter === 'popular') {
+      setFilterBase(posts.items.slice().sort((a, b) => b.viewsCount - a.viewsCount));
+    }
+    if (filter === 'new') {
+      setFilterBase(posts.items.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
+    }
+  }, [filter])
 
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-        <Tab label="Нові" />
-        <Tab label="Популярне" />
+      <Tabs style={{ marginBottom: 15 }} value={filter === 'new' ? 0 : 1} aria-label="basic tabs example">
+        <Tab label="Нові" onClick={() => setFilter('new')} />
+        <Tab label="Популярне" onClick={() => setFilter('popular')} />
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {posts.items
-            ? (isPostLoading ? [...Array(5)] : posts.items).map((obj, index) =>
+          {filterBase
+            ? (isPostLoading ? [...Array(5)] : filterBase).map((obj, index) =>
               isPostLoading ?
                 (<Post key={index} isLoading={true} />)
                 : (
@@ -40,7 +66,7 @@ export const Home = () => {
                     title={obj.title}
                     imageUrl={obj.imageUrl}
                     user={obj.user}
-                    createdAt={obj.createdAt}
+                    createdAt={formatDate(obj.createdAt)}
                     viewsCount={obj.viewsCount}
                     commentsCount={3}
                     tags={obj.tags}

@@ -54,12 +54,12 @@ export const Home = () => {
       if (tag) {
         setFilterBase(filterBase.slice().sort((a, b) => b.viewsCount - a.viewsCount));
       } else {
-        setFilterBase(posts.items.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
+        setFilterBase(posts.items.slice().sort((a, b) => b.viewsCount - a.viewsCount));
       }
     }
     if (filter === 'new') {
       if (tag) {
-        setFilterBase(filterBase.slice().sort((a, b) => b.viewsCount - a.viewsCount));
+        setFilterBase(filterBase.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
       } else {
         setFilterBase(posts.items.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
       }

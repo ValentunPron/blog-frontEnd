@@ -8,10 +8,12 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchPost, fetchTags } from '../redux/slices/posts';
+import { useParams } from 'react-router-dom';
 
 export const Home = () => {
   const dispatch = useDispatch();
   const { posts, tags } = useSelector(state => state.posts);
+  const { tag } = useParams();
   const userData = useSelector(state => state.auth.data);
   const [filter, setFilter] = React.useState('new');
   const [filterBase, setFilterBase] = React.useState([]);
@@ -22,12 +24,20 @@ export const Home = () => {
   React.useEffect(() => {
     dispatch(fetchPost());
     dispatch(fetchTags());
-
   }, []);
 
   React.useEffect(() => {
-    setFilterBase(posts.items.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
-  }, [posts.items])
+    if (tag) {
+      console.log(tag);
+      const array = []
+      posts.items.map((item) => item.tags.includes(tag) ? array.push(item) : '');
+      if (array.length > 0) {
+        setFilterBase(array);
+      }
+    } else {
+      setFilterBase(posts.items.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
+    }
+  }, [posts.items, tag])
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -41,10 +51,18 @@ export const Home = () => {
 
   React.useEffect(() => {
     if (filter === 'popular') {
-      setFilterBase(posts.items.slice().sort((a, b) => b.viewsCount - a.viewsCount));
+      if (tag) {
+        setFilterBase(filterBase.slice().sort((a, b) => b.viewsCount - a.viewsCount));
+      } else {
+        setFilterBase(posts.items.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
+      }
     }
     if (filter === 'new') {
-      setFilterBase(posts.items.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
+      if (tag) {
+        setFilterBase(filterBase.slice().sort((a, b) => b.viewsCount - a.viewsCount));
+      } else {
+        setFilterBase(posts.items.slice().sort((a, b) => b.createdAt - a.createdAt).reverse());
+      }
     }
   }, [filter])
 
@@ -78,25 +96,6 @@ export const Home = () => {
         </Grid>
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
-          <CommentsBlock
-            items={[
-              {
-                user: {
-                  fullName: 'Андрій Петрович',
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                },
-                text: 'Хз, що писати',
-              },
-              {
-                user: {
-                  fullName: 'Аніман Страган',
-                  avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
-                },
-                text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
-              },
-            ]}
-            isLoading={false}
-          />
         </Grid>
       </Grid>
     </>

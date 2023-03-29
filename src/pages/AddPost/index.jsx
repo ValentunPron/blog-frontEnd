@@ -48,8 +48,6 @@ export const AddPost = () => {
     try {
       setLoading(true);
 
-      console.log(tags);
-
       const fields = { title, imageUrl, tags, text }
 
       const { data } = isEditing
@@ -61,14 +59,19 @@ export const AddPost = () => {
       navigate(`/posts/${_id}`);
     } catch (error) {
       console.warn(error);
-      alert("Помилка при створенні статі");
+      if (title.length <= 0) {
+        alert("Заповніть будь ласка заголовок");
+      } else if (text.length <= 0) {
+        alert("Заповніть будь ласка текст");
+      } else {
+        alert("Помилка при створенні статі");
+      }
     }
   }
 
   React.useEffect(() => {
     if (id) {
       axios.get(`/posts/${id}`).then(({ data }) => {
-        console.log(data);
         setTitle(data.title);
         setText(data.text);
         setTags(data.tags.join(' '));

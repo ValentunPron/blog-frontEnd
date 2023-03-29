@@ -54,7 +54,11 @@ export const Post = ({
       {imageUrl && (
         <img
           className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
-          src={`${process.env.REACT_APP_API_URL}${imageUrl}`}
+          src={
+            imageUrl === 'https://kept.com.ua/core/cache/plugins/imageviewer/93360/cdf91db35b1ea3f773d6957daa5829ff4630c1e368cb0b905046065c427391db/1100x1100_cropped.jpg'
+              ? imageUrl
+              : `${process.env.REACT_APP_API_URL}${imageUrl}`
+          }
           alt={title}
         />
       )}
@@ -67,7 +71,7 @@ export const Post = ({
           <ul className={styles.tags}>
             {tags ? tags.map((name) => (
               <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
+                <Link to={`/tags/${name}`}>#{name}</Link>
               </li>
             )) : ''}
           </ul>
@@ -76,10 +80,6 @@ export const Post = ({
             <li>
               <EyeIcon />
               <span>{viewsCount}</span>
-            </li>
-            <li>
-              <CommentIcon />
-              <span>{commentsCount}</span>
             </li>
           </ul>
         </div>

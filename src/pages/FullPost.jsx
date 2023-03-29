@@ -5,7 +5,6 @@ import ReactMarkdown from 'react-markdown'
 
 import axios from "../axios";
 import { Post } from "../components/Post";
-import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 
 export const FullPost = () => {
@@ -25,6 +24,16 @@ export const FullPost = () => {
       })
   }, [])
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
+
   console.log(data);
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost />
@@ -35,10 +44,9 @@ export const FullPost = () => {
       <Post
         id={data._id}
         title={data.title}
-        //https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png
-        imageUrl={data.imageUrl ? `${process.env.REACT_APP_API_URL}${data.imageUrl}` : ''}
+        imageUrl={data.imageUrl ? `${process.env.REACT_APP_API_URL}${data.imageUrl}` : 'https://kept.com.ua/core/cache/plugins/imageviewer/93360/cdf91db35b1ea3f773d6957daa5829ff4630c1e368cb0b905046065c427391db/1100x1100_cropped.jpg'}
         user={data.user}
-        createdAt={data.createdAt}
+        createdAt={formatDate(data.createdAt)}
         viewsCount={data.viewsCount}
         commentsCount={3}
         tags={data.tags}
@@ -46,12 +54,6 @@ export const FullPost = () => {
       >
         <ReactMarkdown children={data.text} />
       </Post>
-      <CommentsBlock
-        items={[]}
-        isLoading={false}
-      >
-        <Index />
-      </CommentsBlock>
     </>
   );
 };

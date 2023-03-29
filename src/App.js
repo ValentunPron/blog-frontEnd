@@ -23,6 +23,7 @@ function App() {
           <Route path="/posts/:id" element={ <FullPost /> } />
           <Route path="/posts/:id/edit" element={ <AddPost /> } />
           <Route path="/" element={ <Home /> } />
+          <Route path="/tags/:tag" element={ <Home />  } />
           <Route path="/add-posts" element={ <AddPost /> } />
           <Route path="/login" element={ <Login /> } />
           <Route path="/register" element={ <Registration /> } />

@@ -44,7 +44,7 @@ export const FullPost = () => {
       <Post
         id={data._id}
         title={data.title}
-        imageUrl={data.imageUrl ? `${process.env.REACT_APP_API_URL}${data.imageUrl}` : 'https://kept.com.ua/core/cache/plugins/imageviewer/93360/cdf91db35b1ea3f773d6957daa5829ff4630c1e368cb0b905046065c427391db/1100x1100_cropped.jpg'}
+        imageUrl={data.imageUrl ? data.imageUrl : 'https://kept.com.ua/core/cache/plugins/imageviewer/93360/cdf91db35b1ea3f773d6957daa5829ff4630c1e368cb0b905046065c427391db/1100x1100_cropped.jpg'}
         user={data.user}
         createdAt={formatDate(data.createdAt)}
         viewsCount={data.viewsCount}

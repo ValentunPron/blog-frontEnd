@@ -14,3 +14,23 @@
   font-weight: bold !important;
   margin-bottom: 30px !important;
 }
+
+@media (max-width: 1024px) {
+  .root {
+    width: calc((1vh + 1vw) * 40)
+  }
+}
+
+@media (max-width: 772px) {
+  .root {
+    padding: 30px;
+    margin: 30px auto;
+  }
+}
+
+@media (max-width: 512px) {
+  .root {
+    padding: 40px 50px;
+    width: 90%;
+  }
+}

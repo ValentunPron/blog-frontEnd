@@ -5,3 +5,56 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #F5F5F5 !important;
 }
+
+html {
+  font-size: 16px;
+}
+
+.home-body {
+  display: grid;
+  column-gap: calc((1vh + 1vw) * 2.5);
+  grid-template-columns: 1fr minmax(225px, auto);
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 12px;
+  }
+  .css-1oqqzyl-MuiContainer-root {
+    padding-left: 10px !important; padding-right: 10px !important;
+  }
+  .css-cveggr-MuiListItemIcon-root {
+    min-width: 36px !important;
+  }
+}
+
+@media (max-width: 772px) {
+  html {
+    font-size: 13px;
+  }
+  .css-1pjmil9-MuiButtonBase-root-MuiTab-root  {
+    min-height: 20px !important;
+    min-width: 20px !important;
+    padding: 15px 12px !important;
+  }
+  .css-1oqqzyl-MuiContainer-root {
+    padding-left: 6px !important; padding-right: 6px !important;
+  }
+  .home-body {
+    grid-template-columns: 1fr;
+    &__tags {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 512px) {
+  .css-1pjmil9-MuiButtonBase-root-MuiTab-root  {
+    min-height: 20px !important;
+    min-width: 20px !important;
+    padding: 20px 12px 5px 12px !important;
+  }
+  html {
+    font-size: 10px;
+  }
+}

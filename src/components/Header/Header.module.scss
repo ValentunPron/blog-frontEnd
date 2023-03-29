@@ -8,6 +8,7 @@
 .inner {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
@@ -33,5 +34,13 @@
 
   a {
     text-decoration: none;
+  }
+}
+
+
+@media (max-width: 772px) {
+  .logo {
+    padding: 0 5px;
+    line-height: 26px;
   }
 }

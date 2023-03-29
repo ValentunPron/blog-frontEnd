@@ -52,15 +52,17 @@ export const Post = ({
         </div>
       )}
       {imageUrl && (
-        <img
-          className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
-          src={
-            imageUrl === 'https://kept.com.ua/core/cache/plugins/imageviewer/93360/cdf91db35b1ea3f773d6957daa5829ff4630c1e368cb0b905046065c427391db/1100x1100_cropped.jpg'
-              ? imageUrl
-              : `${process.env.REACT_APP_API_URL}${imageUrl}`
-          }
-          alt={title}
-        />
+        <Link to={`/posts/${id}`}>
+          <img
+            className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
+            src={
+              imageUrl === 'https://kept.com.ua/core/cache/plugins/imageviewer/93360/cdf91db35b1ea3f773d6957daa5829ff4630c1e368cb0b905046065c427391db/1100x1100_cropped.jpg'
+                ? imageUrl
+                : `${process.env.REACT_APP_API_URL}${imageUrl}`
+            }
+            alt={title}
+          />
+        </Link>
       )}
       <div className={styles.wrapper}>
         <UserInfo {...user} additionalText={createdAt} />

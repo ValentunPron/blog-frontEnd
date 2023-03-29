@@ -72,8 +72,8 @@ export const Home = () => {
         <Tab label="Нові" onClick={() => setFilter('new')} />
         <Tab label="Популярне" onClick={() => setFilter('popular')} />
       </Tabs>
-      <Grid container spacing={4}>
-        <Grid xs={8} item>
+      <div className='home-body'>
+        <div className='home-body__posts'>
           {filterBase
             ? (isPostLoading ? [...Array(5)] : filterBase).map((obj, index) =>
               isPostLoading ?
@@ -93,11 +93,11 @@ export const Home = () => {
                 ))
             : ''
           }
-        </Grid>
-        <Grid xs={4} item>
+        </div>
+        <div className='home-body__tags'>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </>
   );
 };

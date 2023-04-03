@@ -99,6 +99,7 @@ export const AddPost = () => {
     return <Navigate to="/" />
   }
 
+  // `${process.env.REACT_APP_API_URL}${imageUrl}`
   return (
     <Paper style={{ padding: 30 }}>
       <Button onClick={() => inputRef.current.click()} variant="outlined" size="large">

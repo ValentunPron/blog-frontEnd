@@ -9,9 +9,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &__links {
+    display: inline-flex;
+    align-items: center;
+    gap: 40px;
+    justify-content: space-between;
+  }
+  a {
+    transition: 0.4s ease;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
 }
 
 .logo {
+  display: flex;
+  align-items: center;
   background-color: black;
   color: #fff;
   font-weight: 700;
@@ -23,8 +37,15 @@
   text-decoration: none;
 
   &:hover {
+    opacity: 1 !important;
     background-color: #4361ee;
   }
+}
+
+.logoLink {
+  display: flex;
+  height: 100%;
+  align-items: center;
 }
 
 .buttons {
@@ -37,10 +58,47 @@
   }
 }
 
-
 @media (max-width: 772px) {
+  .inner {
+    &__links {
+      gap: 20px;
+    }
+  }
+  .buttons {
+    button {
+      padding: 4px 10px;
+    }
+  }
+  .logoLink {
+    img {
+      width: 60px;
+    }
+  }
   .logo {
-    padding: 0 5px;
+    padding: 3px 6px;
     line-height: 26px;
+  }
+}
+
+@media (max-width: 380px) {
+  .inner {
+    &__links {
+      gap: 15px;
+    }
+  }
+  .buttons {
+    button {
+      padding: 3px 8px;
+    }
+  }
+  .logoLink {
+    img {
+      width: 40px;
+    }
+  }
+  .logo {
+    padding: 0px 3px;
+    line-height: 20px;
+    font-size: 0.75rem;
   }
 }

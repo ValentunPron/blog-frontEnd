@@ -22,10 +22,16 @@ export const Header = () => {
   return (
     <div className={styles.root}>
       <Container maxWidth="lg">
+
         <div className={styles.inner}>
-          <Link className={styles.logo} to="/">
-            <div>KEP BLOG</div>
-          </Link>
+          <div className={styles.inner__links}>
+            <Link className={styles.logo} to="/">
+              <div>KEP BLOG</div>
+            </Link>
+            <a href='https://kep.nung.edu.ua/' className={styles.logoLink}>
+              <img src="https://kep.nung.edu.ua/static/img/fullLogo.svg" alt="Kep" width={80} />
+            </a>
+          </div>
           <div className={styles.buttons}>
             {isAuth ? (
               <>

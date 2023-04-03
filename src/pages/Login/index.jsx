@@ -29,7 +29,7 @@ export const Login = () => {
 
     console.log(data)
     if (!data.payload) {
-      return alert('Не вийшло зареєструватися');
+      return alert('Не вийшло зайти');
     }
 
     if ('token' in data.payload) {

@@ -6,11 +6,21 @@ import ReactMarkdown from 'react-markdown'
 import axios from "../axios";
 import { Post } from "../components/Post";
 import { CommentsBlock } from "../components/CommentsBlock";
+import { Index } from "../components";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchComments } from "../redux/slices/comments";
 
 export const FullPost = () => {
+  const dispatch = useDispatch();
+  const { comments } = useSelector(state => state.comments);
+
   const [data, setData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
   const { id } = useParams();
+
+  React.useEffect(() => {
+    dispatch(fetchComments(id));
+  }, []);
 
   React.useEffect(() => {
     axios.get(`/posts/${id}`)
@@ -34,10 +44,11 @@ export const FullPost = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   }
 
-  console.log(data);
+
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost />
   }
+
 
   return (
     <>
@@ -54,6 +65,22 @@ export const FullPost = () => {
       >
         <ReactMarkdown children={data.text} />
       </Post>
+      <CommentsBlock
+        items={[
+          comments.items.map((comment) => (
+            {
+              user: {
+                fullName: 'Андрій Петрович',
+                avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
+              },
+              text: comment,
+            }
+          ))
+        ]}
+        isLoading={false}
+      >
+        <Index />
+      </CommentsBlock>
     </>
   );
 };

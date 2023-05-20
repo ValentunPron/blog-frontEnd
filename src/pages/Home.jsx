@@ -2,11 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Grid from '@mui/material/Grid';
 
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
-import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchPost, fetchTags } from '../redux/slices/posts';
 import { useParams } from 'react-router-dom';
 

@@ -3,9 +3,8 @@ import axios from '../../axios';
 
 export const fetchComments = createAsyncThunk('posts/removePost', async (id) => {
 	const { data } = await axios.get(`/posts/comments/${id}`);
-	return data
+	return data.comments
 });
-
 
 const initialState = {
 	comments: {

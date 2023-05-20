@@ -8,9 +8,9 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import Skeleton from "@mui/material/Skeleton";
+import { AddComment } from "./AddComment";
 
-export const CommentsBlock = ({ items, children, isLoading = true }) => {
-  console.log(items);
+export const CommentsBlock = ({ items, isLoading = true, id }) => {
   return (
     <SideBlock title="Коментарі">
       <List>
@@ -40,7 +40,7 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
           </React.Fragment>
         ))}
       </List>
-      {children}
+      <AddComment id={id} />
     </SideBlock>
   );
 };

@@ -1,7 +1,7 @@
 import axios from "axios";
 //process.env.REACT_APP_API_URL,
 const instance = axios.create({
-	baseURL: 'http://localhost:4444'
+	baseURL: 'https://kep-blog-server.herokuapp.com'
 });
 
 instance.interceptors.request.use(

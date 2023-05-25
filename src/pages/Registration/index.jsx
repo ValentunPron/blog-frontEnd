@@ -9,10 +9,10 @@ import styles from './Login.module.scss';
 import { useDispatch } from 'react-redux';
 import { fetchRegister, selectIsAuth } from '../../redux/slices/auth';
 import { useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const Registration = () => {
-  const isAuth = useDispatch(selectIsAuth);
+  const route = useNavigate();
   const dispatch = useDispatch();
 
   const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
@@ -33,6 +33,9 @@ export const Registration = () => {
 
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token);
+      alert('Ви зареєструвалися!');
+      window.location.href = '';
+
     }
   };
 

@@ -21,21 +21,29 @@ export const Post = ({
   user,
   viewsCount,
   commentsCount,
+  likes,
   tags,
   children,
   isFullPost,
   isLoading,
+  userMe,
+  onToggleLike,
   isEditable,
 }) => {
   const dispatch = useDispatch();
   if (isLoading) {
     return <PostSkeleton />;
   }
+
   const onClickRemove = () => {
     if (window.confirm('Ви точно хочете видалити статю?')) {
       dispatch(removePost(id));
     }
   };
+
+  const checkLike = userMe ? likes.includes(userMe._id) : false;
+
+  console.log(userMe);
 
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
@@ -79,13 +87,31 @@ export const Post = ({
           </ul>
           {children && <div className={styles.content}>{children}</div>}
           <ul className={styles.postDetails}>
+            <li className={`${styles.likes} ${checkLike ? styles.active : ''}`}>
+              <button onClick={() => onToggleLike(id)}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 78.995 70.28">
+                  <path id="heart" d="M72.729,6.878A21.242,21.242,0,0,0,56.929,0,19.873,19.873,0,0,0,44.516,4.284,25.394,25.394,0,0,0,39.5,9.524a25.38,25.38,0,0,0-5.019-5.24A19.87,19.87,0,0,0,22.068,0a21.243,21.243,0,0,0-15.8,6.878A24.692,24.692,0,0,0,0,23.74c0,6.681,2.49,12.8,7.835,19.246,4.782,5.769,11.654,11.626,19.613,18.408,2.718,2.316,5.8,4.941,9,7.738a4.638,4.638,0,0,0,6.106,0c3.2-2.8,6.281-5.424,9-7.741,7.957-6.781,14.83-12.637,19.611-18.407C76.507,36.537,79,30.421,79,23.74A24.689,24.689,0,0,0,72.729,6.878Zm0,0" transform="translate(0)" />
+                </svg>
+              </button>
+              {
+                likes ?
+                  <span>{likes.length}</span>
+                  : ''
+              }
+            </li>
             <li>
-              <EyeIcon />
-              <span>{viewsCount}</span>
+              <div>
+                <CommentIcon />
+                <span>{commentsCount}</span>
+              </div>
+              <div>
+                <EyeIcon />
+                <span>{viewsCount}</span>
+              </div>
             </li>
           </ul>
         </div>
       </div>
-    </div>
+    </div >
   );
 };

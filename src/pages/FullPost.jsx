@@ -6,13 +6,19 @@ import ReactMarkdown from 'react-markdown'
 import axios from "../axios";
 import { Post } from "../components/Post";
 import { CommentsBlock } from "../components/CommentsBlock";
-import { Index } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchComments } from "../redux/slices/comments";
+import { fetchLike } from "../redux/slices/like";
 
 export const FullPost = () => {
   const dispatch = useDispatch();
-  const { comments } = useSelector(state => state.comments);
+  const { comments, like, authMe } = useSelector(state => {
+    return {
+      like: state.like,
+      comments: state.comments.comments,
+      authMe: state.auth,
+    }
+  });
 
   const [data, setData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
@@ -21,8 +27,6 @@ export const FullPost = () => {
   React.useEffect(() => {
     dispatch(fetchComments(id));
   }, []);
-
-
 
   React.useEffect(() => {
     axios.get(`/posts/${id}`)
@@ -34,7 +38,11 @@ export const FullPost = () => {
         console.warn(error);
         alert('Помилка при полученні статі')
       })
-  }, [])
+  }, [like])
+
+  const toggleLike = (id) => {
+    dispatch(fetchLike(id))
+  }
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -60,7 +68,10 @@ export const FullPost = () => {
         user={data.user}
         createdAt={formatDate(data.createdAt)}
         viewsCount={data.viewsCount}
-        commentsCount={3}
+        likes={data.likes}
+        onToggleLike={toggleLike}
+        commentsCount={data.comments.length}
+        userMe={authMe.data}
         tags={data.tags}
         isFullPost
       >

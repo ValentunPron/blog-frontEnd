@@ -7,10 +7,19 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { fetchPost, fetchTags } from '../redux/slices/posts';
 import { useParams } from 'react-router-dom';
+import { fetchLike } from '../redux/slices/like';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const { posts, tags } = useSelector(state => state.posts);
+  const { posts, tags, like, authMe } = useSelector((state) => {
+    return {
+      posts: state.posts.posts,
+      tags: state.posts.tags,
+      like: state.like,
+      authMe: state.auth,
+    }
+  });
+
   const { tag } = useParams();
   const userData = useSelector(state => state.auth.data);
   const [filter, setFilter] = React.useState('new');
@@ -25,8 +34,15 @@ export const Home = () => {
   }, []);
 
   React.useEffect(() => {
+    dispatch(fetchPost());
+  }, [like])
+
+  const toggleLike = (id) => {
+    dispatch(fetchLike(id))
+  }
+
+  React.useEffect(() => {
     if (tag) {
-      console.log(tag);
       const array = []
       posts.items.map((item) => item.tags.includes(tag) ? array.push(item) : '');
       if (array.length > 0) {
@@ -84,8 +100,11 @@ export const Home = () => {
                     user={obj.user}
                     createdAt={formatDate(obj.createdAt)}
                     viewsCount={obj.viewsCount}
-                    commentsCount={3}
+                    commentsCount={obj.comments.length}
+                    likes={obj.likes}
+                    userMe={authMe.data}
                     tags={obj.tags}
+                    onToggleLike={toggleLike}
                     isEditable={userData?._id === obj.user._id}
                   />
                 ))

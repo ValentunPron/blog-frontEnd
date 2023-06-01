@@ -97,9 +97,39 @@ $blue: #4361ee;
 }
 
 .postDetails {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   list-style: none;
   padding: 0;
   margin: 20px 0 0 0;
+
+  .likes {
+    display: flex;
+    gap: 3px;
+    line-height: 1;
+    align-items: center;
+    &.active {
+      svg {
+        fill: #4361ee;
+      }
+    }
+  }
+
+  button {
+    border: 0px;
+    background-color: transparent;
+    margin: 0px; padding: 0px;
+    cursor: pointer;
+    svg {
+      transition: fill 0.2s ease-in;
+    }
+    &:hover {
+      svg {
+        fill: #2549e7;
+      }
+    }
+  }
 
   li {
     display: inline-flex;
@@ -107,6 +137,10 @@ $blue: #4361ee;
     font-size: 1.2rem;
     margin-right: 20px;
     opacity: 0.5;
+
+    div + div {
+      margin-left: 15px;
+    }
 
     svg {
       font-size: 1.2rem;

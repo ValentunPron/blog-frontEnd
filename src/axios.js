@@ -2,7 +2,7 @@ import axios from "axios";
 //process.env.REACT_APP_API_URL,
 //https://kep-blog-server.herokuapp.com
 const instance = axios.create({
-	baseURL: '/https://kep-blog-server.herokuapp.com'
+	baseURL: 'https://kep-blog-server.herokuapp.com'
 });
 
 instance.interceptors.request.use(

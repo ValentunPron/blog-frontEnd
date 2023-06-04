@@ -9,6 +9,7 @@ import { CommentsBlock } from "../components/CommentsBlock";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchComments } from "../redux/slices/comments";
 import { fetchLike } from "../redux/slices/like";
+import { AlertDialog } from "../components";
 
 export const FullPost = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export const FullPost = () => {
 
   const [data, setData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
+  const [dialogStatus, setDialogStatus] = React.useState(false);
   const { id } = useParams();
 
   React.useEffect(() => {
@@ -41,7 +43,7 @@ export const FullPost = () => {
   }, [like])
 
   const toggleLike = (id) => {
-    dispatch(fetchLike(id))
+    authMe.data ? dispatch(fetchLike(id)) : setDialogStatus(true);
   }
 
   function formatDate(dateString) {
@@ -79,6 +81,8 @@ export const FullPost = () => {
       </Post>
       <CommentsBlock
         id={id}
+        isAuth={authMe}
+        setDialogStatus={setDialogStatus(true)}
         items={[
           comments.items.map((comment) => (
             {
@@ -93,6 +97,7 @@ export const FullPost = () => {
         ]}
         isLoading={false}
       />
+      <AlertDialog status={dialogStatus} onCloseWindow={() => setDialogStatus(false)} text={'Будь ласка, увійдіть до свого облікового запису'} />
     </>
   );
 };

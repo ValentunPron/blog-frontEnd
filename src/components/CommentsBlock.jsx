@@ -9,12 +9,8 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import Skeleton from "@mui/material/Skeleton";
 import { AddComment } from "./AddComment";
-import { useSelector } from "react-redux";
 
-export const CommentsBlock = ({ items, isLoading = true, id }) => {
-  const userData = useSelector(state => state.auth.data);
-
-
+export const CommentsBlock = ({ items, isLoading = true, id, isAuth }) => {
   return (
     <SideBlock title="Коментарі">
       <List>
@@ -46,7 +42,7 @@ export const CommentsBlock = ({ items, isLoading = true, id }) => {
           </React.Fragment>
         ))}
       </List>
-      <AddComment id={id} />
+      {isAuth.data ? <AddComment id={id} /> : <div style={{ marginLeft: '15px', paddingBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}><img src="https://cdn1.iconfinder.com/data/icons/user-fill-icons-set/144/User003_Error-512.png" width={48} height={48} alt="login error" />Потрібно зайти до свого облікового запису, щоб можна було лишати коментарі!</div>}
     </SideBlock>
   );
 };

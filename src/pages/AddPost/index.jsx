@@ -137,7 +137,7 @@ export const AddPost = () => {
       <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
-          {isEditing ? 'Зберегти' : 'Публікувати'}
+          {isEditing ? 'Зберегти' : 'Опублікувати'}
         </Button>
         <Link to="/">
           <Button size="large">Відміна</Button>

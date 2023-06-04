@@ -8,6 +8,7 @@ import { TagsBlock } from '../components/TagsBlock';
 import { fetchPost, fetchTags } from '../redux/slices/posts';
 import { useParams } from 'react-router-dom';
 import { fetchLike } from '../redux/slices/like';
+import { AlertDialog } from '../components';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export const Home = () => {
   const userData = useSelector(state => state.auth.data);
   const [filter, setFilter] = React.useState('new');
   const [filterBase, setFilterBase] = React.useState([]);
+  const [dialogStatus, setDialogStatus] = React.useState(false);
 
   const isPostLoading = posts.status === 'loading';
   const isTagsLoading = tags.stasus === 'loading';
@@ -38,7 +40,7 @@ export const Home = () => {
   }, [like])
 
   const toggleLike = (id) => {
-    dispatch(fetchLike(id))
+    authMe.data ? dispatch(fetchLike(id)) : setDialogStatus(true);
   }
 
   React.useEffect(() => {
@@ -115,6 +117,7 @@ export const Home = () => {
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
         </div>
       </div>
+      <AlertDialog status={dialogStatus} onCloseWindow={() => setDialogStatus(false)} text={'Будь ласка, увійдіть до свого облікового запису'} />
     </>
   );
 };

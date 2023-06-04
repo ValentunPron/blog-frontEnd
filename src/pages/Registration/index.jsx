@@ -10,12 +10,14 @@ import { useDispatch } from 'react-redux';
 import { fetchRegister, selectIsAuth } from '../../redux/slices/auth';
 import { useForm } from 'react-hook-form';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { AlertDialog } from '../../components';
 
 export const Registration = () => {
-  const route = useNavigate();
+  const [dialogStatus, setDialogStatus] = React.useState(false);
+  const [dialogText, setDialogText] = React.useState('');
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
     defaultValues: {
       email: '',
       fullName: "",
@@ -28,54 +30,61 @@ export const Registration = () => {
     const data = await dispatch(fetchRegister(values));
 
     if (!data.payload) {
-      return alert('Не вийшло зареєструватися');
+      setDialogStatus(true)
+      setDialogText('Під час реєстрація виникла помилка!')
     }
 
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token);
-      alert('Ви зареєструвалися!');
-      window.location.href = '';
-
+      setDialogStatus(true)
+      setDialogText('Реєстрація пройшла успішно!')
+      setTimeout(() => {
+        window.location.href = '';
+      }, 3333);
     }
   };
 
   return (
-    <Paper classes={{ root: styles.root }}>
-      <Typography classes={{ root: styles.title }} variant="h5">
-        Створити аккаунт
-      </Typography>
-      <div className={styles.avatar}>
-        <Avatar sx={{ width: 100, height: 100 }} />
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          className={styles.field}
-          label="Повне имя"
-          error={Boolean(errors.fullName?.message)}
-          helperText={errors.fullName?.message}
-          type="text"
-          {...register('fullName', { required: "Вкажіть ім'я" })}
-          fullWidth />
-        <TextField
-          className={styles.field}
-          label="E-Mail"
-          error={Boolean(errors.email?.message)}
-          helperText={errors.email?.message}
-          type="email"
-          {...register('email', { required: 'Вкажіть електронний адрес' })}
-          fullWidth />
-        <TextField
-          className={styles.field}
-          label="Пароль"
-          error={Boolean(errors.password?.message)}
-          helperText={errors.password?.message}
-          type="password"
-          {...register('password', { required: 'Вкажіть пароль' })}
-          fullWidth />
-        <Button type="submit" size="large" variant="contained" fullWidth>
-          Зареєструватися
-        </Button>
-      </form>
-    </Paper>
+    <>
+      <Paper classes={{ root: styles.root }}>
+        <Typography classes={{ root: styles.title }} variant="h5">
+          Створити аккаунт
+        </Typography>
+        <div className={styles.avatar}>
+          <Avatar sx={{ width: 100, height: 100 }} />
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            className={styles.field}
+            label="Повне имя"
+            error={Boolean(errors.fullName?.message)}
+            helperText={errors.fullName?.message}
+            type="text"
+            {...register('fullName', { required: "Вкажіть ім'я" })}
+            fullWidth />
+          <TextField
+            className={styles.field}
+            label="E-Mail"
+            error={Boolean(errors.email?.message)}
+            helperText={errors.email?.message}
+            type="email"
+            {...register('email', { required: 'Вкажіть електронний адрес' })}
+            fullWidth />
+          <TextField
+            className={styles.field}
+            label="Пароль"
+            error={Boolean(errors.password?.message)}
+            inputProps={{ minLength: 5 }}
+            helperText={errors.password?.message}
+            type="password"
+            {...register('password', { required: 'Вкажіть пароль' })}
+            fullWidth />
+          <Button type="submit" size="large" variant="contained" fullWidth>
+            Зареєструватися
+          </Button>
+        </form>
+      </Paper>
+      <AlertDialog status={dialogStatus} onCloseWindow={() => setDialogStatus(false)} text={dialogText} />
+    </>
   );
 };

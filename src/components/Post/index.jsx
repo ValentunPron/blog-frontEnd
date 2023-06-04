@@ -43,8 +43,6 @@ export const Post = ({
 
   const checkLike = userMe ? likes.includes(userMe._id) : false;
 
-  console.log(userMe);
-
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       {isEditable && (

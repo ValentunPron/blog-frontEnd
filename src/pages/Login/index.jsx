@@ -10,9 +10,12 @@ import { useForm } from 'react-hook-form'
 
 import styles from "./Login.module.scss";
 import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
+import { AlertDialog } from "../../components";
 
 export const Login = () => {
   const isAuth = useSelector(selectIsAuth);
+  const [dialogStatus, setDialogStatus] = React.useState(false);
+  const [dialogText, setDialogText] = React.useState('');
   const dispatch = useDispatch();
 
   const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
@@ -27,48 +30,58 @@ export const Login = () => {
     const data = await dispatch(fetchAuth(values));
 
 
-    console.log(data)
     if (!data.payload) {
-      return alert('Не вийшло зайти');
+      setDialogStatus(true)
+      setDialogText('Під час входу виникла помилка!')
     }
 
     if ('token' in data.payload) {
+      setDialogStatus(true)
+      setDialogText('Ви успішно зайшли в обліковий запис!')
       window.localStorage.setItem('token', data.payload.token);
+      setTimeout(() => {
+        window.location.href = '';
+      }, 3333);
     }
   };
 
   if (isAuth) {
-    return <Navigate to="/" />
+    setTimeout(() => {
+      return <Navigate to="/" />
+    }, 2222)
   }
 
   return (
-    <Paper classes={{ root: styles.root }}>
-      <Typography classes={{ root: styles.title }} variant="h5">
-        Вхід в аккаунт
-      </Typography>
-      <form onSubmit={handleSubmit(onSubmit)} >
-        <TextField
-          className={styles.field}
-          label="E-Mail"
-          error={Boolean(errors.email?.message)}
-          helperText={errors.email?.message}
-          type="email"
-          {...register('email', { required: 'Вкажіть почту' })}
-          fullWidth
-        />
-        <TextField
-          className={styles.field}
-          label="Пароль"
-          error={Boolean(errors.email?.message)}
-          helperText={errors.password?.message}
-          type="password"
-          {...register('password', { required: 'Вкажіть пароль' })}
-          fullWidth
-        />
-        <Button type="submit" size="large" variant="contained" fullWidth>
-          Війти
-        </Button>
-      </form>
-    </Paper>
+    <>
+      <Paper classes={{ root: styles.root }}>
+        <Typography classes={{ root: styles.title }} variant="h5">
+          Вхід в аккаунт
+        </Typography>
+        <form onSubmit={handleSubmit(onSubmit)} >
+          <TextField
+            className={styles.field}
+            label="E-Mail"
+            error={Boolean(errors.email?.message)}
+            helperText={errors.email?.message}
+            type="email"
+            {...register('email', { required: 'Вкажіть почту' })}
+            fullWidth
+          />
+          <TextField
+            className={styles.field}
+            label="Пароль"
+            error={Boolean(errors.email?.message)}
+            helperText={errors.password?.message}
+            type="password"
+            {...register('password', { required: 'Вкажіть пароль' })}
+            fullWidth
+          />
+          <Button type="submit" size="large" variant="contained" fullWidth>
+            Війти
+          </Button>
+        </form>
+      </Paper>
+      <AlertDialog status={dialogStatus} onCloseWindow={() => setDialogStatus(false)} text={dialogText} />
+    </>
   );
 };

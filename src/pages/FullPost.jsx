@@ -82,7 +82,6 @@ export const FullPost = () => {
       <CommentsBlock
         id={id}
         isAuth={authMe}
-        setDialogStatus={setDialogStatus(true)}
         items={[
           comments.items.map((comment) => (
             {

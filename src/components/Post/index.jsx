@@ -43,8 +43,6 @@ export const Post = ({
 
   const checkLike = userMe ? likes.includes(userMe._id) : false;
 
-  console.log(userMe);
-
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       {isEditable && (
@@ -78,13 +76,17 @@ export const Post = ({
           <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
             {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
           </h2>
-          <ul className={styles.tags}>
-            {tags ? tags.map((name) => (
-              <li key={name}>
-                <Link to={`/tags/${name}`}>#{name}</Link>
-              </li>
-            )) : ''}
-          </ul>
+          {
+            tags.length > 1
+              ? <ul className={styles.tags}>
+                {tags ? tags.map((name) => (
+                  <li key={name}>
+                    <Link to={`/tags/${name}`}>#{name}</Link>
+                  </li>
+                )) : ''}
+              </ul>
+              : ''
+          }
           {children && <div className={styles.content}>{children}</div>}
           <ul className={styles.postDetails}>
             <li className={`${styles.likes} ${checkLike ? styles.active : ''}`}>

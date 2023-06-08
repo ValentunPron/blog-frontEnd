@@ -89,7 +89,7 @@ export const Home = () => {
         <Tab label="Популярне" onClick={() => setFilter('popular')} />
       </Tabs>
       <div className='home-body'>
-        <div className='home-body__posts'>ї
+        <div className='home-body__posts'>
           {filterBase
             ? (isPostLoading ? [...Array(5)] : filterBase).map((obj, index) =>
               isPostLoading ?

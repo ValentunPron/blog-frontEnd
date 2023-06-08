@@ -16,6 +16,7 @@ export const Login = () => {
   const isAuth = useSelector(selectIsAuth);
   const [dialogStatus, setDialogStatus] = React.useState(false);
   const [dialogText, setDialogText] = React.useState('');
+  const [dialogTitle, setDialogTitle] = React.useState('Помилка');
   const dispatch = useDispatch();
 
   const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm({
@@ -37,6 +38,7 @@ export const Login = () => {
 
     if ('token' in data.payload) {
       setDialogStatus(true)
+      setDialogTitle('Вітаємо на сайті!');
       setDialogText('Ви успішно зайшли в обліковий запис!')
       window.localStorage.setItem('token', data.payload.token);
       setTimeout(() => {
@@ -81,7 +83,7 @@ export const Login = () => {
           </Button>
         </form>
       </Paper>
-      <AlertDialog status={dialogStatus} onCloseWindow={() => setDialogStatus(false)} text={dialogText} />
+      <AlertDialog title={dialogTitle} status={dialogStatus} onCloseWindow={() => setDialogStatus(false)} text={dialogText} />
     </>
   );
 };

@@ -9,12 +9,12 @@ import styles from './Login.module.scss';
 import { useDispatch } from 'react-redux';
 import { fetchRegister, selectIsAuth } from '../../redux/slices/auth';
 import { useForm } from 'react-hook-form';
-import { Navigate, useNavigate } from 'react-router-dom';
 import { AlertDialog } from '../../components';
 
 export const Registration = () => {
   const [dialogStatus, setDialogStatus] = React.useState(false);
   const [dialogText, setDialogText] = React.useState('');
+  const [dialogTitle, setDialogTitle] = React.useState('Помилка');
   const dispatch = useDispatch();
 
   const { register, handleSubmit, formState: { errors, isValid } } = useForm({
@@ -37,6 +37,7 @@ export const Registration = () => {
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token);
       setDialogStatus(true)
+      setDialogTitle('Вітаємо на сайті!')
       setDialogText('Реєстрація пройшла успішно!')
       setTimeout(() => {
         window.location.href = '';
@@ -56,7 +57,7 @@ export const Registration = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             className={styles.field}
-            label="Повне имя"
+            label="Повне ім'я"
             error={Boolean(errors.fullName?.message)}
             helperText={errors.fullName?.message}
             type="text"
@@ -84,7 +85,7 @@ export const Registration = () => {
           </Button>
         </form>
       </Paper>
-      <AlertDialog status={dialogStatus} onCloseWindow={() => setDialogStatus(false)} text={dialogText} />
+      <AlertDialog titlestatus={dialogStatus} onCloseWindow={() => setDialogStatus(false)} text={dialogText} />
     </>
   );
 };

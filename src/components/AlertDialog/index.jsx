@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const AlertDialog = ({ status, onCloseWindow, text }) => {
+export const AlertDialog = ({ title = 'Помилка', status, onCloseWindow, text }) => {
 
 	return (
 		<Dialog
@@ -21,7 +21,7 @@ export const AlertDialog = ({ status, onCloseWindow, text }) => {
 			onClose={onCloseWindow}
 			aria-describedby="alert-dialog-slide-description"
 		>
-			<DialogTitle>{"Помилка"}</DialogTitle>
+			<DialogTitle>{title}</DialogTitle>
 			<DialogContent>
 				<DialogContentText id="alert-dialog-slide-description">
 					{text}
